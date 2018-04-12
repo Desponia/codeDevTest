@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.stream.IntStream;
 
 import static java.lang.System.in;
 
@@ -17,8 +18,9 @@ public class HackerRankDayOne {
     // https://www.hackerrank.com/challenges/prime-checker/problem
     public static void main(String[] args) {
         try {
-/*
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
+/*
+
             int n1 = Integer.parseInt(br.readLine());
             int n2 = Integer.parseInt(br.readLine());
             int n3 = Integer.parseInt(br.readLine());
@@ -43,13 +45,44 @@ public class HackerRankDayOne {
             if (overload) {
                 throw new Exception("Overloading not allowed");
             }*/
+
+
+            // https://www.hackerrank.com/challenges/java-lambda-expressions/problem
+            // 이거 하는 중임 안됨
+            MyMath ob = new MyMath();
+            int T = Integer.parseInt(br.readLine());
+            PerformOperation op;
+            boolean ret = false;
+            String ans = null;
+            while (T --> 0) {
+                String s = br.readLine().trim();
+                StringTokenizer st = new StringTokenizer(s);
+                int ch = Integer.parseInt(st.nextToken());
+                int num = Integer.parseInt(st.nextToken());
+
+                if( ch == 1 ) {
+                    op = ob.isOdd();
+                    ret = ob.checker(op, num);
+                    ans = ret ? "ODD" : "EVEN";
+                } else if(ch == 2) {
+                    op = ob.isPrime();
+                    ret = ob.checker(op, num);
+                    ans = ret ? "PRIME" : "COMPOSITE";
+                } else if (ch == 3) {
+                    op = ob.isPalindrome();
+                    ret = ob.checker(op, num);
+                    ans = ret? "PALINDROME" : "NOT PARLINDROME";
+                }
+                System.out.println(ans);
+            }
+
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
 
         // https://www.hackerrank.com/challenges/java-comparator/problem
-
+/*
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
@@ -64,6 +97,9 @@ public class HackerRankDayOne {
         for(int i = 0; i < player.length; i++ ) {
             System.out.print(String.format("%s %s\n", player[i].name, player[i].score));
         }
+*/
+
+
 
     }
 
@@ -103,17 +139,7 @@ class Cake implements Food {
 
 class FoodFactory {
     public Food getFood(String order) {
-        Food food = null;
-        try {
-            food = (Food) Class.forName("com.yuna.hacker."+order.substring(0, 1).toUpperCase() + order.substring(1).toLowerCase()).newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        return food;
+        return null;
     }
 }
 
@@ -138,5 +164,38 @@ class Checker implements Comparator<Player> {
         } else  {
             return o2.score - o1.score;
         }
+    }
+}
+
+
+// https://www.hackerrank.com/challenges/java-lambda-expressions/problem
+interface PerformOperation {
+    boolean check(int a);
+}
+
+class MyMath {
+    public static boolean checker(PerformOperation p, int num) {
+        return p.check(num);
+    }
+
+    public PerformOperation isOdd() {
+
+        return (int a) -> a%2 != 0 ;
+    }
+
+    public PerformOperation isPrime() {
+        //        return (int a) -> IntStream.range(2, (int)Math.sqrt(a + 1)).noneMatch( i -> a%1 == 0);
+        //        return (int a) -> BigInteger.valueOf(a).isProbablePrime(1);
+
+        return (int a) -> {
+            if(a < 2) return false;
+            for( int i = 0 ; i*i <= a; i++ )
+                if (a%i == 0) return false;
+                return true;
+        };
+    }
+
+    public PerformOperation isPalindrome() {
+        return (int a) -> Integer.toString(a).equals(new StringBuilder(Integer.toString(a)).reverse().toString());
     }
 }
