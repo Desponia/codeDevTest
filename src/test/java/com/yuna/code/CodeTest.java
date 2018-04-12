@@ -10,7 +10,6 @@ public class CodeTest {
 
     @Test
     public void 코드워테스트() {
-
         // 비트 연산자
         // http://fendee.egloos.com/9022534
         // http://blog.naver.com/PostView.nhn?blogId=choigohot&logNo=40193772915
