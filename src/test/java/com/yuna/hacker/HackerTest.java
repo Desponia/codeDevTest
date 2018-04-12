@@ -8,6 +8,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 public class HackerTest {
 
@@ -25,8 +28,23 @@ public class HackerTest {
 
     @Test
     public void 컴페어() {
+
+        Scanner sc = mock(Scanner.class);
+
+        when(sc.nextInt()).thenReturn(10);
+        when(sc.next()).thenReturn("ab 6");
+        when(sc.next()).thenReturn("bcc 0");
+        when(sc.next()).thenReturn("ade 5");
+        when(sc.next()).thenReturn("cab 2");
+        when(sc.next()).thenReturn("dee 0");
+        when(sc.next()).thenReturn("bda 2");
+        when(sc.next()).thenReturn("c 5");
+        when(sc.next()).thenReturn("db 2");
+        when(sc.next()).thenReturn("a 1");
+        when(sc.next()).thenReturn("cbb 1");
+
         // 어떻게 input 해야할지 머르겠당.
-        Scanner sc = new Scanner(System.in);
+//        Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
         Player[] player = new Player[n];
