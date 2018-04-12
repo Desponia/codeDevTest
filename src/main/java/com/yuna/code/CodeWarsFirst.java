@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CodeWarsOne {
+public class CodeWarsFirst {
 
-    private static final Logger logger = LoggerFactory.getLogger(CodeWarsOne.class);
+    private static final Logger logger = LoggerFactory.getLogger(CodeWarsFirst.class);
 
     public static void main(String[] args) {
         logger.debug(intToString(9, 5));
