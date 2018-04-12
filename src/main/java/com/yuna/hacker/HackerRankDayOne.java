@@ -7,11 +7,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
-import java.util.HashSet;
+import java.util.*;
 
 import static java.lang.System.in;
-
-import java.util.Set;
 
 public class HackerRankDayOne {
     private static final Logger logger = LoggerFactory.getLogger(HackerRankDayOne.class);
@@ -19,7 +17,7 @@ public class HackerRankDayOne {
     // https://www.hackerrank.com/challenges/prime-checker/problem
     public static void main(String[] args) {
         try {
-
+/*
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             int n1 = Integer.parseInt(br.readLine());
             int n2 = Integer.parseInt(br.readLine());
@@ -44,10 +42,29 @@ public class HackerRankDayOne {
             }
             if (overload) {
                 throw new Exception("Overloading not allowed");
-            }
+            }*/
         } catch (Exception e) {
             System.out.println(e);
         }
+
+
+        // https://www.hackerrank.com/challenges/java-comparator/problem
+
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        Player[] player = new Player[n];
+        Checker checker = new Checker();
+        for(int i = 0 ; i < n ; i++ ) {
+            player[i] = new Player(sc.next(), sc.nextInt());
+        }
+        sc.close();
+
+        Arrays.sort(player, checker);
+        for(int i = 0; i < player.length; i++ ) {
+            System.out.print(String.format("%s %s\n", player[i].name, player[i].score));
+        }
+
     }
 
 }
@@ -96,8 +113,30 @@ class FoodFactory {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
-
-
         return food;
+    }
+}
+
+
+// https://www.hackerrank.com/challenges/java-comparator/problem
+class Player {
+
+    String name;
+    int score;
+
+    Player(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+}
+
+class Checker implements Comparator<Player> {
+    @Override
+    public int compare(Player o1, Player o2) {
+        if(o2.score == o1.score) {
+            return o1.name.compareTo(o2.name);
+        } else  {
+            return o2.score - o1.score;
+        }
     }
 }
