@@ -63,3 +63,41 @@ class Prime {
         System.out.println();
     }
 }
+
+interface Food {
+    public String getType();
+}
+
+class Pizza implements Food {
+
+    @Override
+    public String getType() {
+        return "Someone ordered a Fast Food!";
+    }
+}
+
+class Cake implements Food {
+
+    @Override
+    public String getType() {
+        return "Someone ordered a Dessert!";
+    }
+}
+
+class FoodFactory {
+    public Food getFood(String order) {
+        Food food = null;
+        try {
+            food = (Food) Class.forName("com.yuna.hacker."+order.substring(0, 1).toUpperCase() + order.substring(1).toLowerCase()).newInstance();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+
+        return food;
+    }
+}
