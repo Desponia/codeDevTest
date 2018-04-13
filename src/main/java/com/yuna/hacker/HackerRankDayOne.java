@@ -48,7 +48,6 @@ public class HackerRankDayOne {
 
 
             // https://www.hackerrank.com/challenges/java-lambda-expressions/problem
-            // 이거 하는 중임 안됨
             MyMath ob = new MyMath();
             int T = Integer.parseInt(br.readLine());
             PerformOperation op;
@@ -198,4 +197,17 @@ class MyMath {
     public PerformOperation isPalindrome() {
         return (int a) -> Integer.toString(a).equals(new StringBuilder(Integer.toString(a)).reverse().toString());
     }
+
+
+    public boolean checkBracket(String text) {
+
+        if(text.length() % 2 != 0)
+            return false;
+
+        while(text.length() != text.replace("\\(\\)|\\[\\]|\\{\\}", "").length())
+            System.out.println(text.isEmpty());
+
+        return false;
+    }
+
 }
