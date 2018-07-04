@@ -11,13 +11,15 @@ public class ChapterTwo {
 
     private static final Logger log = LoggerFactory.getLogger(ChapterTwo.class);
 
-
+    private static final List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
+    private static final List<Integer> nums = Arrays.asList(5, 10, 23, 444, 12345, 123);
 
     public static void main(String[] args) {
 
 //        test1();
-        test2();
-
+//        test2();
+        test3();
+        test4();
     }
 
     public static void prettyPrintApple(List<Apple> inventory, AppleFormatter formatter) {
@@ -53,7 +55,6 @@ public class ChapterTwo {
     }
 
     public static void test2() {
-        List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"), new Apple(120, "red"));
 
         List<Apple> heavyApples = filterApples(inventory, new AppleHeavyWeightPredicate());
         List<Apple> greenApples = filterApples(inventory, new AppleGreenColorPredicate());
@@ -61,10 +62,41 @@ public class ChapterTwo {
         log.debug("heavyApples : {} \n greenApples : {} ", heavyApples.toString(), greenApples.toString());
 
     }
+
+    public static void test3() {
+        List<Apple> result = filterApples(inventory, (Apple apple) -> "red".equalsIgnoreCase(apple.getColor()));
+        log.debug("result : {}", result.toString());
+    }
+
+    public static void test4() {
+        List<Apple> redApples = filter(inventory, (Apple apple) -> "red".equalsIgnoreCase(apple.getColor()));
+        List<Integer> evenNumbers = filter(nums, (Integer i) -> i % 2 == 0);
+        log.debug("redApples : {} , evenNumbers : {} ", redApples.toString(), evenNumbers.toString());
+    }
+
+    public static <T> List<T> filter(List<T> list, Predicate<T> p) {
+        List<T> result = new ArrayList<>();
+        for(T e: list) {
+            if(p.test(e)) {
+                result.add(e);
+            }
+        }
+        return result;
+    }
 }
 
 
+interface AppleFormatter {
+    String accept(Apple a);
+}
 
+interface ApplePredicate {
+    boolean test(Apple apple);
+}
+
+interface Predicate<T> {
+    boolean test(T t);
+}
 
 class AppleFancyFormatter implements AppleFormatter {
 
@@ -76,7 +108,6 @@ class AppleFancyFormatter implements AppleFormatter {
     }
 }
 
-
 class AppleSimpleFormatter implements AppleFormatter {
 
     @Override
@@ -84,7 +115,6 @@ class AppleSimpleFormatter implements AppleFormatter {
         return String.format("An apple of %s", apple.getWeight());
     }
 }
-
 
 class AppleHeavyWeightPredicate implements ApplePredicate {
 
@@ -101,4 +131,3 @@ class AppleGreenColorPredicate implements ApplePredicate {
         return "green".equalsIgnoreCase(apple.getColor());
     }
 }
-
