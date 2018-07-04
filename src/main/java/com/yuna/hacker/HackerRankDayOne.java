@@ -179,20 +179,20 @@ class MyMath {
     }
 
     public PerformOperation isOdd() {
-
         return (int a) -> a%2 != 0 ;
     }
 
     public PerformOperation isPrime() {
-        //        return (int a) -> IntStream.range(2, (int)Math.sqrt(a + 1)).noneMatch( i -> a%1 == 0);
-        //        return (int a) -> BigInteger.valueOf(a).isProbablePrime(1);
-
+            return (int a) -> java.util.stream.IntStream.range(2, (int)Math.sqrt(a + 1)).noneMatch( i -> a % 2 == 0);
+//                return (int a) -> BigInteger.valueOf(a).isProbablePrime(1);
+        /*
         return (int a) -> {
             if(a < 2) return false;
             for( int i = 0 ; i*i <= a; i++ )
                 if (a%i == 0) return false;
                 return true;
         };
+        */
     }
 
     public PerformOperation isPalindrome() {
