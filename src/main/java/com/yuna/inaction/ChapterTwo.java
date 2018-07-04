@@ -23,6 +23,7 @@ public class ChapterTwo {
 //        test4();
 //        test5();
         test6();
+        test7();
     }
 
     public static void prettyPrintApple(List<Apple> inventory, AppleFormatter formatter) {
@@ -95,6 +96,10 @@ public class ChapterTwo {
         log.debug("nonEmpty : {}", nonEmpty.toString());
     }
 
+    public static void test7() {
+        forEach(Arrays.asList(1, 2, 3, 4, 5, 6), (Integer i) -> System.out.println(i));
+    }
+
     public static <T> List<T> filter(List<T> list, Predicate<T> p) {
         List<T> result = new ArrayList<>();
         for(T e: list) {
@@ -104,7 +109,13 @@ public class ChapterTwo {
         }
         return result;
     }
-}
+
+    public static <T> void forEach(List<T> list, Consumer<T> c) {
+        for(T i: list) {
+            c.accept(i);
+        }
+    }
+ }
 
 
 interface AppleFormatter {
@@ -118,6 +129,11 @@ interface ApplePredicate {
 @FunctionalInterface
 interface Predicate<T> {
     boolean test(T t);
+}
+
+@FunctionalInterface
+interface Consumer<T> {
+    void accept(T t);
 }
 /*
 
