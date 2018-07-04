@@ -29,4 +29,14 @@ public class CodeTest {
         Assert.assertEquals(-4, CodeWarsSecond.dartGame("1T2D3D#"));
         Assert.assertEquals(59, CodeWarsSecond.dartGame("1D2S3T*"));
     }
+
+    @Test
+    public void 코드워테스트3() {
+        Assert.assertEquals(50, CodeWarsThird.calculateCache(new String[]{"Jeju", "Pangyo", "Seoul", "NewYork", "LA", "Jeju", "Pangyo", "Seoul", "NewYork", "LA"}, 3));
+        Assert.assertEquals(21, CodeWarsThird.calculateCache(new String[]{"Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul", "Jeju", "Pangyo", "Seoul"}, 3));
+        Assert.assertEquals(60, CodeWarsThird.calculateCache(new String[]{"Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"}, 2));
+        Assert.assertEquals(52, CodeWarsThird.calculateCache(new String[]{"Jeju", "Pangyo", "Seoul", "NewYork", "LA", "SanFrancisco", "Seoul", "Rome", "Paris", "Jeju", "NewYork", "Rome"}, 5));
+        Assert.assertEquals(16, CodeWarsThird.calculateCache(new String[]{"Jeju", "Pangyo", "NewYork", "newyork"}, 2));
+        Assert.assertEquals(25, CodeWarsThird.calculateCache(new String[]{"Jeju", "Pangyo", "Seoul", "NewYork", "LA"}, 0));
+    }
 }
