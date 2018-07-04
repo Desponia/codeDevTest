@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class ChapterTwo {
@@ -18,8 +19,10 @@ public class ChapterTwo {
 
 //        test1();
 //        test2();
-        test3();
-        test4();
+//        test3();
+//        test4();
+//        test5();
+        test6();
     }
 
     public static void prettyPrintApple(List<Apple> inventory, AppleFormatter formatter) {
@@ -74,6 +77,24 @@ public class ChapterTwo {
         log.debug("redApples : {} , evenNumbers : {} ", redApples.toString(), evenNumbers.toString());
     }
 
+    public static void test5() {
+        inventory.sort(new Comparator<Apple>() {
+            @Override
+            public int compare(Apple o1, Apple o2) {
+                return (o1.getWeight() + "").compareTo( o2.getWeight() + "");
+            }
+        });
+
+        log.debug(inventory.toString());
+    }
+
+    public static void test6() {
+        List<String> listOfStrings = Arrays.asList("", "1234", "test", "");
+        Predicate<String> nonEmptyStringPredication = (String s) -> !s.isEmpty();
+        List<String> nonEmpty = filter(listOfStrings, nonEmptyStringPredication);
+        log.debug("nonEmpty : {}", nonEmpty.toString());
+    }
+
     public static <T> List<T> filter(List<T> list, Predicate<T> p) {
         List<T> result = new ArrayList<>();
         for(T e: list) {
@@ -94,9 +115,16 @@ interface ApplePredicate {
     boolean test(Apple apple);
 }
 
+@FunctionalInterface
 interface Predicate<T> {
     boolean test(T t);
 }
+/*
+
+interface Comparator<T> {
+    int compare(T o1, T o2);
+}
+*/
 
 class AppleFancyFormatter implements AppleFormatter {
 
