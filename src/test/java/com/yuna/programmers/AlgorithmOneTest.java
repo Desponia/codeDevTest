@@ -47,4 +47,12 @@ public class AlgorithmOneTest {
         assertEquals("For The Last Week", AlgorithmOne.solutionFive("for the last week"));
     }
 
+    @Test
+    public void 솔루션육테스트() {
+//        AlgorithmOne.solitionSix(78);
+//        AlgorithmOne.solitionSix(15);
+        assertEquals(83, AlgorithmOne.solitionSix(78));
+        assertEquals(23, AlgorithmOne.solitionSix(15));
+    }
+
 }

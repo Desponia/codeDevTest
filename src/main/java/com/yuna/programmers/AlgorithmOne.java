@@ -120,5 +120,35 @@ public class AlgorithmOne {
         return sb.toString();
     }
 
+//    https://programmers.co.kr/learn/courses/30/lessons/12911?language=java
+    public static int solitionSix(int n) {
+/*
+        String binary = Integer.toBinaryString(n);
+        int cnt1 = binary.replace("0", "").length();
+        int result = 0;
+        log.debug("n : {}, binary : {}, cnt1:{}", n, binary, cnt1);
+
+        while (true) {
+            n++;
+            String binary2 = Integer.toBinaryString(n);
+            int temp = binary2.replace("0", "").length();
+//            log.debug("binary2 : {}, temp : {}", binary2, temp);
+            if( temp == cnt1) {
+                result = n;
+                break;
+            }
+        }
+        log.debug("result : {}", result);
+
+        return result;
+        */
+        int postPattern = n & -n;
+        log.debug("postPattern : {}", postPattern);
+        int smallPattern = ((n ^ (n + postPattern)) / postPattern) >> 2;
+        log.debug("smallPattern : {}", smallPattern);
+
+        return n + postPattern | smallPattern;
+    }
+
 
 }
