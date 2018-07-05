@@ -38,4 +38,13 @@ public class AlgorithmOneTest {
         assertEquals(false, AlgorithmOne.solutionFour("(()("));
     }
 
+    @Test
+    public void 솔루션오테스트() {
+//        AlgorithmOne.solutionFive("3people unFollowed me");
+//        AlgorithmOne.solutionFive("for the last week");
+
+        assertEquals("3people Unfollowed Me", AlgorithmOne.solutionFive("3people unFollowed me"));
+        assertEquals("For The Last Week", AlgorithmOne.solutionFive("for the last week"));
+    }
+
 }

@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -84,5 +86,39 @@ public class AlgorithmOne {
         }
 */
     }
+
+//    https://programmers.co.kr/learn/courses/30/lessons/12951?language=java
+    public static String solutionFive(String s) {
+
+        String[] str = s.split(" ");
+//        char tempC = 65;
+        // 대문자 65 ~ 90   ///   소문자       97 ~ 122
+//        log.debug(String.valueOf(tempC));
+        /*
+        List tempList = Arrays.asList(str);
+        List result = (List) tempList.stream().map(e -> upperCase(e.toString())).collect(Collectors.toList());
+
+        log.debug("result : {}", Arrays.toString(result.toArray()));
+        log.debug("---- > {}", String.join(" ", result));
+        return String.join(" ", result);
+        */
+
+        boolean flag = true;
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < s.length(); i++ ) {
+            char c = s.charAt(i);
+            if(i == 0 || flag) {
+                sb.append(Character.toUpperCase(c));
+                flag = false;
+            } else {
+                sb.append(Character.toLowerCase(c));
+            }
+            if(c == ' ') {
+                flag = true;
+            }
+        }
+        return sb.toString();
+    }
+
 
 }
