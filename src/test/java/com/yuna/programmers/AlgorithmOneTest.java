@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -53,6 +55,25 @@ public class AlgorithmOneTest {
 //        AlgorithmOne.solitionSix(15);
         assertEquals(83, AlgorithmOne.solitionSix(78));
         assertEquals(23, AlgorithmOne.solitionSix(15));
+    }
+
+    @Test
+    public void 솔루션세븐테스트() {
+        Map<Integer, Integer> testMap = new HashMap<>();
+        testMap.put(1, 1);
+        testMap.put(2, 2);
+        testMap.put(3, 4);
+        testMap.put(4, 11);
+        testMap.put(5, 12);
+        testMap.put(6, 14);
+        testMap.put(7, 21);
+        testMap.put(8, 22);
+        testMap.put(9, 24);
+        testMap.put(10, 41);
+
+        for(int i : testMap.keySet()) {
+            assertEquals(AlgorithmOne.solutionSeven(i), String.valueOf(testMap.get(i)));
+        }
     }
 
 }

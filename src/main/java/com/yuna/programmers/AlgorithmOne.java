@@ -122,7 +122,6 @@ public class AlgorithmOne {
 
 //    https://programmers.co.kr/learn/courses/30/lessons/12911?language=java
     public static int solitionSix(int n) {
-/*
         String binary = Integer.toBinaryString(n);
         int cnt1 = binary.replace("0", "").length();
         int result = 0;
@@ -141,13 +140,32 @@ public class AlgorithmOne {
         log.debug("result : {}", result);
 
         return result;
-        */
-        int postPattern = n & -n;
+
+        /*int postPattern = n & -n;
         log.debug("postPattern : {}", postPattern);
         int smallPattern = ((n ^ (n + postPattern)) / postPattern) >> 2;
         log.debug("smallPattern : {}", smallPattern);
 
         return n + postPattern | smallPattern;
+        */
+    }
+
+//    https://programmers.co.kr/learn/courses/30/lessons/12899?language=java
+    public static String solutionSeven(int n) {
+        String answer = "";
+        while(n > 0) {
+            int remain = n % 3;
+            n = (int) Math.floor(n / 3);
+            if(remain == 0) {
+                n--;
+            }
+            answer += String.valueOf(remain);
+        }
+        List<String> reverseAnser = Arrays.asList(answer.replace("0", "4").split(""));
+        Collections.reverse(reverseAnser);
+        answer = String.join("", reverseAnser);
+        log.debug("answer :: {}", answer);
+        return answer;
     }
 
 
