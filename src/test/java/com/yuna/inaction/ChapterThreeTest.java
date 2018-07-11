@@ -11,6 +11,7 @@ public class ChapterThreeTest {
         ChapterThree.test1();
         ChapterThree.test2();
         ChapterThree.test3();
+        ChapterThree.test4();
     }
 
 

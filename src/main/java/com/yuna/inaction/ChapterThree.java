@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.DoubleFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -56,6 +57,11 @@ public class ChapterThree {
 
     }
 
+    public static void test4() {
+        double result = integrate(x -> x + 10, 3, 5);
+        log.debug("result : {}", result);
+    }
+
     public static List<Apple> filterApples(List<Apple> inventory, Predicate<Apple> p) {
         List<Apple> result = new ArrayList<>();
         for(Apple apple : inventory) {
@@ -65,6 +71,10 @@ public class ChapterThree {
         }
 
         return result;
+    }
+
+    public static double integrate(DoubleFunction<Double> f, double a, double b) {
+        return (f.apply(a) + f.apply(b)) * (b-a) / 2.0;
     }
 
 }
