@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
+/**
+ * author : jihye choi
+ */
 public class ChapterTwo {
 
     private static final Logger log = LoggerFactory.getLogger(ChapterTwo.class);
@@ -55,6 +59,7 @@ public class ChapterTwo {
                 result.add(apple);
             }
         }
+
         return result;
     }
 
@@ -126,10 +131,13 @@ interface ApplePredicate {
     boolean test(Apple apple);
 }
 
+/*
+
 @FunctionalInterface
 interface Predicate<T> {
     boolean test(T t);
 }
+*/
 
 @FunctionalInterface
 interface Consumer<T> {
