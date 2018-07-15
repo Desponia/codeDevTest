@@ -25,4 +25,9 @@ public class ChapterFiveTest {
     public void 테스트4() {
         ChapterFive.test4();
     }
+
+    @Test
+    public void 테스트5() {
+        ChapterFive.test5();
+    }
 }

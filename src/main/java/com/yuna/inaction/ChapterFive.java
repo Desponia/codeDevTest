@@ -91,4 +91,12 @@ public class ChapterFive {
         List result3 = num1.stream().flatMap(i -> num2.stream().filter( j -> (i + j) % 3 == 0)).collect(toList());
 
     }
+
+    public static void test5() {
+        int count = Dish.menu.stream().map(d->1).reduce(0, (a, b) -> a+b);
+        log.debug("count : {}", count);
+
+        long count2 = Dish.menu.stream().count();
+        log.debug("count2 : {}", count2);
+    }
 }
