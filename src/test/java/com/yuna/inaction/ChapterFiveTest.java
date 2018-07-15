@@ -30,4 +30,9 @@ public class ChapterFiveTest {
     public void 테스트5() {
         ChapterFive.test5();
     }
+
+    @Test
+    public void 테스트6() {
+        ChapterFive.test6();
+    }
 }

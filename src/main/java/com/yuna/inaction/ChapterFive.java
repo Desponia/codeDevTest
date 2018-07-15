@@ -3,17 +3,27 @@ package com.yuna.inaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
 public class ChapterFive {
 
     private static final Logger log = LoggerFactory.getLogger(ChapterFive.class);
+
+    private static final Trader raoul = new Trader("Raoul", "Cambridge");
+    private static final Trader mario = new Trader("Mario","Milan");
+    private static final Trader alan = new Trader("Alan","Cambridge");
+    private static final Trader brian = new Trader("Brian","Cambridge");
+
+    private static final List<Transaction> transactions = Arrays.asList(
+            new Transaction(brian, 2011, 300),
+            new Transaction(raoul, 2012, 1000),
+            new Transaction(raoul, 2011, 400),
+            new Transaction(mario, 2012, 710),
+            new Transaction(mario, 2012, 700),
+            new Transaction(alan, 2012, 950)
+    );
 
     public static void test1() {
         List<Dish> dishes = Dish.menu.stream().filter(Dish::isVegetarian).collect(toList());
@@ -98,5 +108,29 @@ public class ChapterFive {
 
         long count2 = Dish.menu.stream().count();
         log.debug("count2 : {}", count2);
+    }
+
+    public static void test6() {
+
+        List<Transaction> resultList1 = transactions.stream().filter(e -> e.getYear() == 2011).sorted(Comparator.comparing(Transaction::getValue)).collect(toList());
+        log.debug("resultList1 : {}", resultList1.toString());
+
+        List<String> city = transactions.stream().map(e -> e.getTrader().getCity()).distinct().collect(toList());
+        log.debug("city : {}", city);
+
+        List cambridgeMan = transactions.stream().filter(e -> e.getTrader().getCity().equalsIgnoreCase("cambridge")).map( e -> e.getTrader()).distinct().sorted(Comparator.comparing(Trader::getName)).collect(toList());
+        log.debug("cambridgeMan : {}", cambridgeMan.toString());
+
+        boolean isMilan = transactions.stream().anyMatch(e -> e.getTrader().getCity().equalsIgnoreCase("milan"));
+        log.debug("isMilan : {}", isMilan);
+
+        transactions.stream().filter(e -> e.getTrader().getCity().equalsIgnoreCase("cambridge")).map(Transaction::getValue).forEach(System.out::println);
+
+        int maxTransactionVal = Collections.max(transactions.stream().map(e -> e.getValue()).collect(toList()));
+        log.debug("maxTransactionVal : {}", maxTransactionVal);
+
+        int minTransactionVal = Collections.min(transactions.stream().map(e -> e.getValue()).collect(toList()));
+        log.debug("minTransactionVal : {}", minTransactionVal);
+
     }
 }
