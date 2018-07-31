@@ -30,4 +30,9 @@ public class ChapterSixTest {
         ChapterSix.reducingTest();
     }
 
+    @Test
+    public void 그루핑테스트() {
+        ChapterSix.groupingTest();
+    }
+
 }

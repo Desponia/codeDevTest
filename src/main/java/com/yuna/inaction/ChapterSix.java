@@ -3,9 +3,8 @@ package com.yuna.inaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Comparator;
-import java.util.IntSummaryStatistics;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ChapterSix {
@@ -63,6 +62,9 @@ public class ChapterSix {
         totalCalories = Dish.menu.stream().collect(Collectors.reducing(0, Dish::getCalories, Integer::sum));
         logger.debug("totalCalories 44 : {}", totalCalories);
 
+        totalCalories = Dish.menu.stream().mapToInt(Dish::getCalories).sum();
+        logger.debug("totalCalories 55 : {}", totalCalories);
+
         Optional<Dish> mostCalorieDish = Dish.menu.stream().collect(Collectors.reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
         logger.debug("mostCalorieDish 11 - name : {}, calorie : {}", mostCalorieDish.get().getName(), mostCalorieDish.get().getCalories());
 
@@ -71,4 +73,12 @@ public class ChapterSix {
 
     }
 
+    public static void groupingTest() {
+        Map<Dish.Type, List<Dish>> dishesByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType));
+        logger.debug("dishesByType : {}", dishesByType.toString());
+    }
+
+    public static <T> Collector<T, ? ,Long> counting() {
+        return Collectors.reducing(0L, e-> 1L, Long::sum);
+    }
 }
