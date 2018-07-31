@@ -25,4 +25,9 @@ public class ChapterSixTest {
         ChapterSix.test3();
     }
 
+    @Test
+    public void 리듀싱테스트() {
+        ChapterSix.reducingTest();
+    }
+
 }
