@@ -1,5 +1,6 @@
 package com.yuna.inaction;
 
+import com.yuna.inaction.common.PrimeNumbersCollector;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,11 @@ public class ChapterSixTest {
     public void 소수테스트() {
         logger.debug("isPrime : {}", ChapterSix.partitionPrimes(30));
         logger.debug("isPrime custom : {}", ChapterSix.partitionPrimesWithCustomCollector(100));
+    }
 
-
+    @Test
+    public void 스피드테스트() {
+        logger.debug("partitioning(partitionPrimes) done in : [ {} ] msecs", ChapterSix.collectorHarness(ChapterSix::partitionPrimes));
+        logger.debug("partitioning(partitionPrimesWithCustomCollector) done in : [ {} ] msecs", ChapterSix.collectorHarness(ChapterSix::partitionPrimesWithCustomCollector));
     }
 }

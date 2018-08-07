@@ -213,4 +213,17 @@ public class ChapterSix {
         int candidateRoot = (int) Math.sqrt((double) candidate);
         return takeWhile(primes, i -> i <= candidateRoot).stream().noneMatch(p -> candidate % p == 0);
     }
+
+    public static long collectorHarness(Consumer<Integer> primePartitioner) {
+        long fastest = Long.MAX_VALUE;
+        for(int i = 0; i < 10; i++) {
+            long start = System.nanoTime();
+            primePartitioner.accept(1_000_000);
+            long duration = (System.nanoTime() - start) / 1_000_000;
+            if(duration < fastest) {
+                fastest = duration;
+            }
+        }
+        return fastest;
+    }
 }
