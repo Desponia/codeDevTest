@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -169,6 +170,7 @@ public class ChapterSix {
 
         Map<Boolean, Long> quiz3 = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, counting()));
         logger.debug("quiz3 : {}", quiz3);
+
     }
 
     public static <T> Collector<T, ? ,Long> counting() {
@@ -180,12 +182,33 @@ public class ChapterSix {
 //        return IntStream.range(2, candidate).noneMatch( i -> candidate % i == 0);
 
         // 주어진 수의 제곱근 이하로 제한
-        int candidatRoot = (int) Math.sqrt((double) candidate);
-        return IntStream.rangeClosed(2, candidatRoot).noneMatch( i -> candidate % i == 0);
+        int candidateRoot = (int) Math.sqrt((double) candidate);
+        return IntStream.rangeClosed(2, candidateRoot).noneMatch( i -> candidate % i == 0);
     }
 
 //    isPrime을 predicate로 이용한 소수, 비소수 구분
     public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
         return IntStream.rangeClosed(2, n).boxed().collect(Collectors.partitioningBy(candidate -> isPrime(candidate)));
+    }
+
+    public static Map<Boolean, List<Integer>> partitionPrimesWithCustomCollector(int n) {
+        return IntStream.rangeClosed(2, n).boxed().collect(new PrimeNumbersCollector());
+    }
+
+//    전체 stream을 처리한 후 결과를 반환하는 filter 대신 대상의 제곱보다 큰 소수를 찾으면 검사를 중단하는
+    public static <A> List<A> takeWhile(List<A> list, Predicate<A> p) {
+        int i = 0;
+        for(A item: list) {
+            if(!p.test(item)) {
+                return list.subList(0, i);
+            }
+            i++;
+        }
+        return list;
+    }
+
+    public static boolean isPrime(List<Integer> primes, int candidate) {
+        int candidateRoot = (int) Math.sqrt((double) candidate);
+        return takeWhile(primes, i -> i <= candidateRoot).stream().noneMatch(p -> candidate % p == 0);
     }
 }

@@ -43,5 +43,8 @@ public class ChapterSixTest {
     @Test
     public void 소수테스트() {
         logger.debug("isPrime : {}", ChapterSix.partitionPrimes(30));
+        logger.debug("isPrime custom : {}", ChapterSix.partitionPrimesWithCustomCollector(100));
+
+
     }
 }
