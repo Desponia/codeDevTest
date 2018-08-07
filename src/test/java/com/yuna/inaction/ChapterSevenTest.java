@@ -1,5 +1,6 @@
 package com.yuna.inaction;
 
+import com.yuna.inaction.common.ForkJoinSumCalculator;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,11 @@ public class ChapterSevenTest {
 
         logger.debug("measureSumPerf rangedSum in [ {} ] msecs", ChapterSeven.measureSumPerf(ChapterSeven::rangedSum, 10_000_000));
         logger.debug("measureSumPerf parallelRangedSum in [ {} ] msecs", ChapterSeven.measureSumPerf(ChapterSeven::parallelRangedSum, 10_000_000));
+    }
+
+    @Test
+    public void 병렬스레드테스트() {
+        logger.debug("measureSumPerf forkJoinSum in [ {} ] msecs", ChapterSeven.measureSumPerf(ForkJoinSumCalculator::forkJoinSum, 10_000_000L));
     }
 
 }
