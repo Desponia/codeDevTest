@@ -1,4 +1,4 @@
-package com.yuna.inaction;
+package com.yuna.inaction.common;
 
 /**
  * author : jihye choi

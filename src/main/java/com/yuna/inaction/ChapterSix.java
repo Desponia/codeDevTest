@@ -1,5 +1,7 @@
 package com.yuna.inaction;
 
+import com.yuna.inaction.common.Dish;
+import com.yuna.inaction.common.PrimeNumbersCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
