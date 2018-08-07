@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChapterSix {
 
@@ -104,9 +105,87 @@ public class ChapterSix {
         })));
         logger.debug("dishesByTypeCaloricLevel : {}", dishesByTypeCaloricLevel);
 
+        Map<Dish.Type, Long> typesCount = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, counting()));
+        logger.debug("typesCount : {}", typesCount);
+
+        Map<Dish.Type, Optional<Dish>> mostCaloricByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.maxBy(Comparator.comparingInt(Dish::getCalories))));
+        logger.debug("mostCaloricByType : {}", mostCaloricByType);
+
+        Map<Dish.Type, Dish> mostCaloricByType2 = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));
+        logger.debug("mostCaloricByType2 : {}", mostCaloricByType2);
+
+        Map<Dish.Type, Integer> totalCaloriesByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.summingInt(Dish::getCalories)));
+        logger.debug("totalCaloriesByType : {}", totalCaloriesByType);
+
+        Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.mapping(
+                dish -> {
+                    if (dish.getCalories() <= 400) {
+                        return CaloricLevel.DIET;
+                    } else if (dish.getCalories() <= 700) {
+                        return CaloricLevel.NORMAL;
+                    } else {
+                        return CaloricLevel.FAT;
+                    }
+                }, Collectors.toSet()
+        )));
+        logger.debug("caloricLevelsByType : {}", caloricLevelsByType);
+
+        caloricLevelsByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.mapping(
+                dish -> {
+                    if (dish.getCalories() <= 400) {
+                        return CaloricLevel.DIET;
+                    } else if (dish.getCalories() <= 700) {
+                        return CaloricLevel.NORMAL;
+                    } else {
+                        return CaloricLevel.FAT;
+                    }
+                }, Collectors.toCollection(HashSet::new)
+        )));
+        logger.debug("caloricLevelsByType 22 hashSet new : {}", caloricLevelsByType);
+    }
+
+    public static void partitioningTest() {
+        Map<Boolean, List<Dish>> partitionedMenu = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian));
+        logger.debug("partitionedMenu : {}", partitionedMenu);
+
+        List<Dish> vegetarianDishes = partitionedMenu.get(true);
+        logger.debug("vegetarianDishes : {}", vegetarianDishes);
+
+        vegetarianDishes = Dish.menu.stream().filter(Dish::isVegetarian).collect(Collectors.toList());
+        logger.debug("vegetarianDishes 22 : {}", vegetarianDishes);
+
+        Map<Boolean, Map<Dish.Type, List<Dish>>> vegetarianDishesByType = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.groupingBy(Dish::getType)));
+        logger.debug("vegetarianDishesByType : {}", vegetarianDishesByType);
+
+        Map<Boolean, Dish> mostCaloricPartitionedByVegetarian = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));
+        logger.debug("mostCaloricPartitionedByVegetarian : {}", mostCaloricPartitionedByVegetarian);
+
+        Map<Boolean, Map<Boolean, List<Dish>>> quiz1 = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.partitioningBy(d -> d.getCalories() > 500)));
+        logger.debug("quiz1 : {}", quiz1);
+
+        // quiz2 쓸 수 있게 수정해보기
+        Map<Boolean, Dish> quiz2 = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)), Optional::get)));
+        logger.debug("quiz2 : {}", quiz2);
+
+        Map<Boolean, Long> quiz3 = Dish.menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, counting()));
+        logger.debug("quiz3 : {}", quiz3);
     }
 
     public static <T> Collector<T, ? ,Long> counting() {
         return Collectors.reducing(0L, e-> 1L, Long::sum);
+    }
+
+    // 정수인지 소수인지
+    public static boolean isPrime(int candidate) {
+//        return IntStream.range(2, candidate).noneMatch( i -> candidate % i == 0);
+
+        // 주어진 수의 제곱근 이하로 제한
+        int candidatRoot = (int) Math.sqrt((double) candidate);
+        return IntStream.rangeClosed(2, candidatRoot).noneMatch( i -> candidate % i == 0);
+    }
+
+//    isPrime을 predicate로 이용한 소수, 비소수 구분
+    public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
+        return IntStream.rangeClosed(2, n).boxed().collect(Collectors.partitioningBy(candidate -> isPrime(candidate)));
     }
 }
