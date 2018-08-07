@@ -73,9 +73,37 @@ public class ChapterSix {
 
     }
 
+    enum CaloricLevel { DIET, NORMAL, FAT }
+
     public static void groupingTest() {
         Map<Dish.Type, List<Dish>> dishesByType = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType));
         logger.debug("dishesByType : {}", dishesByType.toString());
+
+        Map<CaloricLevel, List<Dish>> dishesByCaloricLevel = Dish.menu.stream().collect(
+                Collectors.groupingBy(dish -> {
+                    if (dish.getCalories() <= 400) {
+                        return CaloricLevel.DIET;
+                    } else if (dish.getCalories() <= 700) {
+                        return CaloricLevel.NORMAL;
+                    } else {
+                        return CaloricLevel.FAT;
+                    }
+                })
+        );
+
+        logger.debug("dishesByCaloricLevel : {}", dishesByCaloricLevel);
+
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel = Dish.menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.groupingBy(dish -> {
+            if (dish.getCalories() <= 400) {
+                return CaloricLevel.DIET;
+            } else if (dish.getCalories() <= 700) {
+                return CaloricLevel.NORMAL;
+            } else {
+                return CaloricLevel.FAT;
+            }
+        })));
+        logger.debug("dishesByTypeCaloricLevel : {}", dishesByTypeCaloricLevel);
+
     }
 
     public static <T> Collector<T, ? ,Long> counting() {
